@@ -8,7 +8,7 @@ import { DashboardOutlined } from '@material-ui/icons';
 class Dashboard extends React.Component<any, any>{
 
     public state = {
-        components: [Posts, Users]
+        components: [Users, Posts]
     };
 
     public render() {

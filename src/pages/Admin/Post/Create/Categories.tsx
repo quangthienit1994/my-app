@@ -50,10 +50,10 @@ class PublishCom extends React.Component<any, any>{
     return (
       <div className="d-bloc w-100">
         <FormControlLabel
-          className="mb-0"
+          className="mb-0 text-truncate"
           style={{ paddingLeft: i }}
           label={name}
-          control={<Checkbox className="p-1" onClick={this.handleChangeTerm(node)} checked={Boolean(categories.find((n: any) => n.uid === uid))} />}
+          control={<Checkbox className="p-1" onClick={this.handleChangeTerm(node)} checked={Boolean(categories.find((n: any) => n.uid === uid || n.id === uid))} />}
         />
       </div>
     );

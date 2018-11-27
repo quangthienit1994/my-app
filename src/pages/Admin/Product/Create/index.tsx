@@ -4,9 +4,8 @@ import { TextField, Grid, Typography, LinearProgress } from '@material-ui/core';
 import { ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import PublishComponent from './Publish.component';
-import PostFormat from './PostFormat';
-import Categories from './Categories';
-import Tags from './Tags';
+import Categories from '../../Post/Create/Categories';
+import Tags from '../../Post/Create/Tags';
 import Thumbnail from './Thumbnail';
 import Metas from './Metas';
 import Excerpt from './Excerpt';
@@ -15,6 +14,8 @@ import ChooseFileMedia from 'src/components/ChooseFileMedia';
 import string_to_slug from 'src/helper/string_to_slug';
 import * as firebase from 'firebase/app';
 import Loading from 'src/components/Loading';
+import Woocommerc from './Woocommerc';
+import Gallery from './Gallery';
 
 interface IProps {
     type: string; // loại bài viết
@@ -66,7 +67,6 @@ class Index extends React.Component<IProps, any>{
         const { title, slug } = this.state.post;
         const { name } = this.props;
         const { loadingPost } = this.state;
-        // window.console.log(this.state.post);
         return (
             <div className="post-create">
                 {this.state.loading && <LinearProgress />}
@@ -74,7 +74,7 @@ class Index extends React.Component<IProps, any>{
                     <Grid item={true} xs={12} sm={8} md={9} xl={10} className="pr-sm-1 mb-2">
                         <ExpansionPanel>
                             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                                <Typography>Tiêu đề bài viết</Typography>
+                                <Typography>Tiêu đề sản phẩm</Typography>
                             </ExpansionPanelSummary>
                             <ExpansionPanelDetails>
                                 <div className="clearfix w-100">
@@ -104,12 +104,13 @@ class Index extends React.Component<IProps, any>{
                         </div>
                         <Excerpt onChange={this.handleChangeStatePost} post={this.state.post} />
                         <Metas onChange={this.handleChangeStatePost} post={this.state.post} />
+                        <Gallery onChange={this.handleChangeStatePost} post={this.state.post} />
+                        <Woocommerc onChange={this.handleChangeStatePost} post={this.state.post} />
                     </Grid>
                     <Grid item={true} xs={12} sm={4} md={3} xl={2}>
                         <PublishComponent loading={this.state.loading} onSubmit={this.handleSubmit} onChange={this.handleChangeStatePost} post={this.state.post} />
-                        <PostFormat onChange={this.handleChangeStatePost} post={this.state.post} />
-                        <Categories onChange={this.handleChangeStatePost} post={this.state.post} type="category" term="category" />
-                        <Tags onChange={this.handleChangeStatePost} post={this.state.post} type="tag" term="tag" />
+                        <Categories onChange={this.handleChangeStatePost} post={this.state.post} type="category" term="danh-muc-san-pham" />
+                        <Tags onChange={this.handleChangeStatePost} post={this.state.post} type="tag" term="the-may-san-pham" />
                         <Thumbnail onChange={this.handleChangeStatePost} post={this.state.post} />
                     </Grid>
                 </Grid>
@@ -123,6 +124,7 @@ class Index extends React.Component<IProps, any>{
     }
 
     public handleChangeStatePost = (key: string) => (e: any) => {
+        window.console.log();
         switch (key) {
             case 'title':
                 const slug = string_to_slug(e.target.value) + "-" + this.state.post.date;
@@ -136,7 +138,15 @@ class Index extends React.Component<IProps, any>{
                 });
                 break;
             default:
-                this.setState({ post: { ...this.state.post, [key]: e.target.value } });
+                switch (e.target.type) {
+                    case 'checkbox':
+                    case 'radio':
+                        this.setState({ post: { ...this.state.post, [key]: e.target.checked } });
+                        break;
+                    default:
+                        this.setState({ post: { ...this.state.post, [key]: e.target.value } });
+                        break;
+                }
                 break;
         }
     }
@@ -174,6 +184,7 @@ class Index extends React.Component<IProps, any>{
         // Loại bỏ những term sai định dạng
         postData.categories = postData.categories.filter(({ uid }: any) => typeof uid === 'string').map(({ uid }: any) => firebase.firestore().doc(`/terms/${uid}`));
         postData.tags = postData.tags.filter(({ uid }: any) => typeof uid === 'string').map(({ uid }: any) => firebase.firestore().doc(`/terms/${uid}`));
+        window.console.log(postData);
         // loại bỏ những team giống nhau
         // postData.categories = postData.categories.filter(({id}: any) => !postData.categories.find((node: any) => node.id === id));
         // postData.tags       = postData.tags.filter(({id}: any) => !postData.tags.find((node: any) => node.id === id));
@@ -249,7 +260,7 @@ class Index extends React.Component<IProps, any>{
 
     public getPost(uid: string) {
         this.setState({ loadingPost: true });
-        firebase.firestore().collection('posts').doc(uid).get().then((result: any) => {
+        firebase.firestore().collection('posts').doc(uid).get().then((result) => {
             if (result.exists) {
                 const cats = (result.data() as any).categories;
                 const tas = (result.data() as any).tags;

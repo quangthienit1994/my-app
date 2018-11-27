@@ -1,0 +1,47 @@
+[class*="loading-"] {
+    height: 6px;
+    width: 100%;
+    background: #f6f7f9;
+    margin-bottom: 13px;
+    margin-right: 5px;
+}
+.loading-line {
+    &-sm {
+        width: 120px;
+        margin-top: 10px;
+        margin-left: 50px;
+    }
+    &-xs {
+        width: 80px;
+        margin-left: 50px;
+    }
+    &-df {
+        margin-top: 30px;
+        width: 380px;
+    }
+    &-lg {
+        width: 200px;
+    }
+    &-lgx {
+        width: 450px;
+    }
+    height: 1.5rem;
+}
+
+[class*="loading-line"],
+.loading-thumbnail {
+    animation: timeline;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+    background-size: 800px auto;
+    background-position: 100px 0;
+}
+@keyframes timeline {
+  0% {
+    background-position: -350px 0;
+}
+  100% {
+    background-position: 400px 0; }
+}

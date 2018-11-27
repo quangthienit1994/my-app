@@ -19,6 +19,7 @@ const rows: IRow[] = [
     { id: 'title', numeric: false, disablePadding: true, label: 'Tiêu đề' },
     { id: 'calories', numeric: true, disablePadding: false, label: 'Danh mục', disabled: true },
     { id: 'tags', numeric: true, disablePadding: false, label: 'Thẻ mây', disabled: true },
+    { id: 'price', numeric: true, disablePadding: false, label: 'Giá sản phẩm' },
     { id: 'author', numeric: true, disablePadding: false, label: 'Tác giả' },
     { id: 'date', numeric: true, disablePadding: false, label: 'Ngày đăng bài' },
 ];
@@ -126,7 +127,7 @@ class Posts extends React.Component<any, any>{
                                                                     <div className="w-100 ml-1">
                                                                         {
                                                                             post.deleting ? <LinearProgress /> :
-                                                                                <Button className="pl-0" style={{ textTransform: 'unset' }} onClick={this.props.onChange(post.uid)}>
+                                                                                <Button className="pl-0" style={{ textTransform: 'none' }} onClick={this.props.onChange(post.uid)}>
                                                                                     <Typography className="ml-2">{post.title}</Typography>
                                                                                 </Button>
                                                                         }
@@ -165,6 +166,10 @@ class Posts extends React.Component<any, any>{
                                                                         })
                                                                     )
                                                                 }
+                                                            </TableCell>
+                                                            <TableCell>
+                                                                <Typography className='text-truncate'>Giá gốc: {post.product_price} đ</Typography>
+                                                                <Typography className='text-truncate'>Giá khuyến mãi: {post.product_price_sales} đ</Typography>
                                                             </TableCell>
                                                             <TableCell className="d-none-sm">
                                                                 {post.author && <Button size="small" className="text-truncate" style={{ textTransform: 'unset' }} onClick={this.queryWhere('author', post.author.uid)}>{post.author.displayName || post.author.email}</Button>}

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Button, Avatar, Menu, MenuItem, MenuList, ListItemText, ListItemIcon, Divider, Dialog, Typography } from '@material-ui/core';
-import { AccountBox, Settings, Input } from '@material-ui/icons';
+import { AccountBox, Input } from '@material-ui/icons';
 import Profile from 'src/pages/Profile/Profile';
 import Setting from 'src/pages/Profile/Setting';
 import * as firebase from 'firebase/app';
@@ -21,10 +21,6 @@ class AccountTools extends React.Component<any, any>{
                 </Button>
                 <Menu anchorEl={this.state.anchorEl} open={this.state.open} onClose={this.handleMenuShow}>
                     <MenuList>
-                        <MenuItem button={true} onClick={this.show('setting')}>
-                            <ListItemIcon><Settings /></ListItemIcon>
-                            <ListItemText>Cài đặt</ListItemText>
-                        </MenuItem>
                         <MenuItem button={true} onClick={this.show('profile')}>
                             <ListItemIcon><AccountBox /></ListItemIcon>
                             <ListItemText>Thông tin tài khoản</ListItemText>

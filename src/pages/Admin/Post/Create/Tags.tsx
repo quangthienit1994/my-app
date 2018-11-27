@@ -101,6 +101,7 @@ class Tags extends React.Component<any, any>{
     firebase.firestore().collection('terms')
     .where('type', '==', type)
     .where('term', '==', term)
+    .where('count', '>=', 1)
     .orderBy('count', 'desc')
     .get().then((result: any) => {
       this.setState({ tagsMostUsed: result.docs.map((doc: any) => ({ ...doc.data(), uid: doc.id })) });

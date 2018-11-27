@@ -16,11 +16,11 @@ class Index extends React.Component<any, any>{
 
     public render() {
         return (
-            <Grid item={true} xs={12} sm={6}>
-                <div className="table-responsive">
-                    <Paper className="p-2 m-2 rounded-0">
-                        <Typography variant="subheading">DANH SÁCH TÀI KHOẢN MỚI NHẤT</Typography>
-                        {this.state.loading && <LinearProgress />}
+            <Grid item={true} xs={12}>
+                <Paper className="p-2 m-2 rounded-0">
+                    <Typography variant="subheading">DANH SÁCH TÀI KHOẢN MỚI NHẤT</Typography>
+                    {this.state.loading && <LinearProgress />}
+                    <div className="table-responsive">
                         <Table>
                             <TableHead>
                                 <TableRow>
@@ -37,7 +37,7 @@ class Index extends React.Component<any, any>{
                                             <TableRow key={user.uid}>
                                                 <TableCell>
                                                     <div className="d-flex align-items-center">
-                                                        <Avatar src={user.photoURL} />
+                                                        <Avatar src={user.photoURL || (window as any)._INIT_DATA_.define.photoURL} />
                                                         <Typography className="ml-2">{user.email}</Typography>
                                                     </div>
                                                 </TableCell>
@@ -58,9 +58,9 @@ class Index extends React.Component<any, any>{
                                 </TableRow>
                             </TableFooter>
                         </Table>
-                    </Paper>
-                </div>
-            </Grid>
+                    </div>
+                </Paper>
+            </Grid >
         );
     }
 

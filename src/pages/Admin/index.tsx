@@ -10,6 +10,8 @@ import { Input, SettingsApplications, ColorLens } from '@material-ui/icons';
 import Dashboard from './Dashboard';
 import PrimaryMenuAccount from './components/PrimaryMenu.account';
 import * as firebase from 'firebase/app';
+// import Product from './Product';
+// import Woocommerc from './Woocommerc';
 
 class Admin extends React.Component<any, any>{
     public state = {
@@ -34,7 +36,7 @@ class Admin extends React.Component<any, any>{
                 </AppBar>
                 <AppBar position="fixed" style={{ background: this.props.theme.palette.background.paper }} className="mb-2">
                     <Toolbar>
-                        <Button color="default" onClick={this.handleOpenSidebar}><ColorLens /> Thanh công cụ </Button>
+                        <Button color="default" onClick={this.handleOpenSidebar}><ColorLens /></Button>
                         <PrimaryMenuAccount />
                         <Tooltip title={this.props.theme.palette.type !== 'light' ? "Giao diện sáng" : "Giao diện tối"} >
                             <SwitchCOM onClick={this.changeTheme} color="default" checked={this.props.theme.palette.type === 'light'} />
@@ -68,6 +70,16 @@ class Admin extends React.Component<any, any>{
                                 <Link className="d-block" style={{ color: 'unset', textDecoration: 'none' }} to="/admin/libraries">Thư viện</Link>
                             </ListItemText>
                         </ListItem>
+                        {/* <ListItem button={true}>
+                            <ListItemText>
+                                <Link className="d-block" style={{ color: 'unset', textDecoration: 'none' }} to="/admin/products">Sản phẩm</Link>
+                            </ListItemText>
+                        </ListItem>
+                        <ListItem button={true}>
+                            <ListItemText>
+                                <Link className="d-block" style={{ color: 'unset', textDecoration: 'none' }} to="/admin/woocommerc">Cài đặt cửa hàng</Link>
+                            </ListItemText>
+                        </ListItem> */}
 
                         <Divider />
                         <ListItem button={true}>
@@ -95,6 +107,8 @@ class Admin extends React.Component<any, any>{
                         <Route path="/admin/users" component={User} />
                         <Route path="/admin/posts" component={Post} />
                         <Route path="/admin/settings" component={Setting} />
+                        {/* <Route path="/admin/products" component={Product} />
+                        <Route path="/admin/woocommerc" component={Woocommerc} /> */}
                     </Switch>
                 </div>
             </div>
